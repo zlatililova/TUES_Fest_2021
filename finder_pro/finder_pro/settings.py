@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'board',
-    #'users',
-    #'crispy_forms',
+    'users',
+    'crispy_forms',
     "mapbox_location_field",
     "bootstrap4",
 ]
