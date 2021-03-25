@@ -9,7 +9,7 @@
 }
 
 nav{  
-  background: #222222;
+  background: #d11818;
   padding: 10px 40px 10px 70px;
   border: 1px solid #000;
   border-right: none;
@@ -29,7 +29,7 @@ nav ul li.logo{
   flex: 1;
   font-size: 30px;
   font-weight: 700;
-  color: #fefefe;
+  color: #f12e2e;
   cursor: pointer;
 }
 
@@ -43,12 +43,12 @@ nav ul div.items a{
   font-size: 18px;
   padding: 0 12px;
   transition: all 0.3s ease 0s;
-  color:white;
+  color:#C3073F;
 }
 
 nav ul div.items a:hover{
-  color: #e4cc94;
-  border-bottom:#e4cc94 3px solid;
+  color: #C3073F;
+  border-bottom:#C3073F 3px solid;
 }
 
 
