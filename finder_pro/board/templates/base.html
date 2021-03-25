@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head profile="http://localhost:8000/">
+
+<link rel="icon" type="image/png" href="{% static 'images/car-emoji-by-google.png' %}">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type = "text/css" href="{% static 'board/hacktues.css' %}">
+        <link rel="stylesheet" href="{% static 'board/about.css' %}">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">   
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+        
+        {% block head %}{% endblock head %}
+    </head>
+
+
+<body bgcolor="#fff9e0">
+    <nav>
+        <ul>
+            <li class="logo">Parking<span style="color: #c1a163;">PRO</span>&nbsp<i class='fas fa-car'></i>
+            </li>
+            <li class="btn"><span class="fas fa-bars"></span></li>
+            <div class="items">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            {% if user.is_authenticated != 0 %}
+                <li><a href="{% url 'create-page' %}">Create</a></li>
+            {% else %}
+            <li><a href="">Create</a></li>
+            {% endif %}
+                
+                
+                <li><a href="{% url 'profile' %}">Profile</button></a>
+            </div>
+            {% if user.is_authenticated != 0 %}
+            <a class="asp" href="{% url 'logout' %}"><button class="main-button">Log out</button></a>
+            {% else %}
+            
+            <a class="asp" href="{% url 'login' %}"><button class="main-button">Log in</button></a>
+            <a class="asp" href="{% url 'register' %}"><button class="main-button">Register</button></a>
+            {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        $('nav ul li.btn span').click(function () {
+            $('nav ul div.items').toggleClass("show");
+            $('nav ul li.btn span').toggleClass("show");
+        });
+    </script>
+
+<div>
+    {% block content %}{% endblock %}
+</div>
+
+
+</body>
+</html>
