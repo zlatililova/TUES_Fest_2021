@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+nav{  
+  background: #222222;
+  padding: 10px 40px 10px 70px;
+  border: 1px solid #000;
+  border-right: none;
+  border-left: none;
+  z-index: 2;
+}
+
+nav ul{
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+nav ul li.logo{
+  flex: 1;
+  font-size: 30px;
+  font-weight: 700;
+  color: #fefefe;
+  cursor: pointer;
+}
+
+nav ul div.items{
+  padding: 0 25px;
+  display: inline-flex;
+}
+
+nav ul div.items a{
+  text-decoration: none;
+  font-size: 18px;
+  padding: 0 12px;
+  transition: all 0.3s ease 0s;
+  color:white;
+}
+
+nav ul div.items a:hover{
+  color: #e4cc94;
+  border-bottom:#e4cc94 3px solid;
+}
+
+
+.search-icon{
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  width: 35%;
+  display: flex;
+  background: #f2f2f2;
+  border-style: groove;
+  border-color: #000;
+  border-radius: 10px;
+  font-size: 23px;
+  font-weight: 300;
+  padding: 5 11px 0 0px;
+  text-overflow: ellipsis;
+  height: 50px;
+}
+
+.search-icon input{
+  height: 100%;
+  width: 100%;
+}
+
+
+
+.main-button {
+  padding: 7px 11px;
+  margin: 10px;
+  margin-right: 25px;
+  border: none;
+  border-radius: 50px;
+  background-color:#c1a163 ;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  font-size: 19px;
+}
+
+button:hover {
+  background-color:#ad8c54;
+}
+  
+#map {
+  height: 500px;
+  width: 75%;
+  position: relative;
+  margin: auto;
+  margin-top: 10px;
+}
+
+#infowindow-content {
+  font-size: medium;
+  font-weight: 100;
+}
+
+#pac-input {
+  color: #000;
+}
+
+  nav ul li.btn span.show:before{
+    content: '\f00d';
+  }
+
+  nav ul li.btn{
+      font-size: 30px;
+      flex: 1;
+      padding: 0 30px;
+      display: none;
+  }
+
+nav ul li.btn span{
+    height: 42px;
+    width: 42px;
+    text-align: center;
+    line-height: 42px;
+    border: 3px solid #151515;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+nav ul li.btn:hover span:before{
+    content: '\f00d';
+}
+
+  @media screen and (max-width: 1052px) {
+    nav{
+      padding: 10px 40px 10px 0px;
+    }
+    nav ul li.logo{
+      display: none;
+    }
+    nav ul div.items{
+      flex: 4;
+    }
+  }
+  @media screen and (max-width: 800px){
+    nav ul li.btn{
+      display: block;
+    }
+    nav{
+      z-index: 1;
+      padding: 9px 40px 9px 0;
+    }
+    nav ul div.items{
+      z-index: -1;
+      position: fixed;
+      top: -220px;
+      right: 0;
+      width: 100%;
+      background: #222222;
+      display: inline-block;
+      transition: top .4s;
+      opacity: 0.9;
+    }
+    nav ul div.items.show{
+      top: 60px;
+    }
+    nav ul div.items li{
+      text-align: center;
+      line-height: 30px;
+      margin: 30px 0;
+      
+    }
+    nav ul div.items li a{
+      font-size: 19px;
+    }
+  }
+  @media screen and (max-width: 405px) {
+    nav ul{
+      flex-wrap: nowrap;
+    }
+    nav ul li.search{
+      width: 50vmin;
+    }
+    nav ul li input{
+      width: 40vmin;
+    }
+    nav ul li .search-icon{
+      width: 10vmin;
+    }
+  }
+
+
+
+.rate {
+  float: left;
+  height: 46px;
+  padding: 0 10px;
+}
+.rate:not(:checked) > input {
+  position:absolute;
+  top:-9999px;
+}
+.rate:not(:checked) > label {
+  float:right;
+  width:1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:30px;
+  color:#ccc;
+}
+.rate:not(:checked) > label:before {
+  content: '★ ';
+}
+.rate > input:checked ~ label {
+  color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08;
+}
+
+.content-section {
+  background: #BAB2B5;
+  padding: 10px 20px;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  margin: 60px;
+}
