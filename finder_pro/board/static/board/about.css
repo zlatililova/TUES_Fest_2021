@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+.bg-img {
+
+    /*background-image: url("static {% images/parking-lot(1).jpg %}");*/
+    min-height: 900px;
+    /*background-color: rgba(0, 0, 0, 0.7);*/
+    background-blend-mode: multiply;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    color: #000000;
+    z-index: 0;
+}
+
+
+      
+      .inner-width{
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        padding: 0 20px;
+        overflow: hidden;
+        margin-top: 50px;
+      }
+      .section-title{
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 35px;
+      }
+      .border{
+        width: 110px;
+        height: 2px;
+        /*background: #c4a46c;*/
+        margin: 40px auto;
+        margin-top: 20px;
+      }
+      .about-container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .about-title{
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        font-weight: bold;
+
+      }
+      .about-box{
+        max-width: 33.33%;
+        padding: 20px;
+        text-align: center;
+        /*color: #ddd;*/
+        cursor: pointer;
+        margin-top: 50px;
+      }
+       
+      .about-icon{
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        border: 3px solid #c4a46c;
+        color: #c4a46c;
+        transform: rotate(45deg);
+        margin-bottom: 30px;
+        margin-top: 16px;
+        transition: 0.3s linear;
+      }
+      .about-icon i{
+        line-height: 70px;
+        transform: rotate(-45deg);
+        font-size: 26px;
+      }
+      .about-box:hover .about-icon{
+        background: #c4a46c;
+        color: #ddd;
+      }
+
+      .about-desc{
+        font-size: 16px;
+      }
+      
+      @media screen and (max-width:960px) {
+        .about-box{
+          max-width: 45%;
+        }
+      }
+      
+      @media screen and (max-width:768px) {
+        .about-box{
+          max-width: 50%;
+        }
+      }
+      
+      @media screen and (max-width:480px) {
+        .about-box{
+          max-width: 100%;
+        }
+      }
+
+
+
