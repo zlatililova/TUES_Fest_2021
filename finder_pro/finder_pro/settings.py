@@ -37,8 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'board',
+    #'users',
+    #'crispy_forms',
+    "mapbox_location_field",
+    "bootstrap4",
 ]
-
+GEOPOSITION_GOOGLE_MAPS_API_KEY = "AIzaSyCndiwpn0s7MRo2qbhPbzhSxdODyPkFDBo"
+MAPBOX_KEY = "pk.eyJ1IjoiemxhdGkiLCJhIjoiY2tmdmE3dnc3MDdtYTM1bWtnYWg3bzM3dCJ9.jaPf3VRI2VGop6qNDNtA8Q"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -118,3 +124,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL='home'
+LOGIN_URL='login'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
