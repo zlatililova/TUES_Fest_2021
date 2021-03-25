@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCndiwpn0s7MRo2qbhPbzhSxdODyPkFDBo&callback=initMap&libraries=places&v=weekly" async defer></script>
+    <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
+    <script src="static/js/customMapStyles.js"></script>
+{% endblock head %}
+
+{% block content %}
+
+    <li class="search-icon">
+        <input id="pac-input" type="text" placeholder="Enter a location" />
+        
+    </li>
+    <div id="map"></div>
+    <div id="infowindow-content">
+    <img src="static/images/place-icon-temp.png" width="16" height="16" id="place-icon" />
+    <span id="place-name" class="title"></span><br />
+    <span id="place-address"></span>
+    </div>
+{% endblock content %}
+
