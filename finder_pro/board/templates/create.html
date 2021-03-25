@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Getting LatLng from a Click Event</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+{% endblock head %}
+
+{% block content %}
+
+<div class="content-section">
+<div id="map"></div>
+<script>
+    function initMap() {
+        var myLatlng = new google.maps.LatLng(42.697708,23.321867);
+        var mapOptions = {
+            zoom: 12,
+            center: myLatlng
+        }
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        // Place a draggable marker on the map
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            draggable: true,
+            title: "Drag me!"
+        });
+        // Configure the click listener.
+        map.addListener('click', function (mapsMouseEvent) {
+            // Create a new InfoWindow.
+            infoWindow = new google.maps.InfoWindow({ position: mapsMouseEvent.latLng });
+            var info = infoWindow.setContent(mapsMouseEvent.latLng.toString());
+        });
+    }
+</script>
+    <br>
+    <div class="form-group">
+        <a class="btn btn-outline-info" onclick="submit()" type="submit"href="{% url 'home' %}">Submit new ParkingPRO location</a>
+    </div>
+</div>
+
+<script>
+    const btn = document.getElementById("pac-card");
+    function submit() {
+    alert('Submitted successfully.');
+    return;
+
+};
+
+</script>
+
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCndiwpn0s7MRo2qbhPbzhSxdODyPkFDBo&callback=initMap&libraries=places&v=weekly">
+</script>
+
+{% endblock content %}
