@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "mapbox_location_field",
     "bootstrap4",
 ]
-GEOPOSITION_GOOGLE_MAPS_API_KEY = "AIzaSyCndiwpn0s7MRo2qbhPbzhSxdODyPkFDBo"
+GEOPOSITION_GOOGLE_MAPS_API_KEY = "AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo"
 MAPBOX_KEY = "pk.eyJ1IjoiemxhdGkiLCJhIjoiY2tmdmE3dnc3MDdtYTM1bWtnYWg3bzM3dCJ9.jaPf3VRI2VGop6qNDNtA8Q"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

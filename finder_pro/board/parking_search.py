@@ -6,7 +6,7 @@ import math
 def locations(lat1, lng1, maxRadius = 1000):
     #API_KEY = get_my_key()
     locations_dict = list()
-    API_KEY = 'AIzaSyCndiwpn0s7MRo2qbhPbzhSxdODyPkFDBo'
+    API_KEY = 'AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo'
     gmaps = googlemaps.Client(key = API_KEY)
     places_result = gmaps.places_nearby(location = (lat1, lng1 ), radius = maxRadius, open_now = False, type = 'parking')
 
