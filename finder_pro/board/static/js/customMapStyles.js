@@ -251,7 +251,7 @@ styles: [
     }
 ],
 });
-
+    let parkers = [];
     const card = document.getElementById("pac-card");
     const input = document.getElementById("pac-input");
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -261,6 +261,8 @@ styles: [
     autocomplete.setOptions({ strictBounds: true });
     const infowindow = new google.maps.InfoWindow();
     const infowindowContent = document.getElementById("infowindow-content");
+    
+    let directionsDisplay = new google.maps.DirectionsRenderer();
     infowindow.setContent(infowindowContent);
     const marker = new google.maps.Marker({
         map,
@@ -268,7 +270,32 @@ styles: [
         icon: 'static/images/car_marker.png'
     });
 
+    function addMarker(location) {
+        const marker = new google.maps.Marker({
+          position: location,
+          map: map,
+        });
+        parkers.push(marker);
+    }
 
+    function setMapOnAll(map) {
+        for (let i = 0; i < parkers.length; i++) {
+          parkers[i].setMap(map);
+        }
+    }
+
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+      
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+    
+    function deleteMarkers() {
+    clearMarkers();
+    parkers = [];
+    }
 
     autocomplete.addListener("place_changed", () => {
         infowindow.close();
@@ -317,6 +344,7 @@ styles: [
         xhr.open('GET', `find/?lat=${currentLocation.lat()}&lng=${currentLocation.lng()}`);
         xhr.onload = function() {
             if (xhr.status === 200) {
+                deleteMarkers();
                 const { found, name, lat, lng} = JSON.parse(xhr.responseText);
 
                 if (!found) {
@@ -325,14 +353,18 @@ styles: [
                 }
 
                 const parkingLatLng = { lat, lng };
-                const parker = new google.maps.Marker({
-                    position: parkingLatLng,
-                    map
-                });
+                
+                addMarker(parkingLatLng);
+                showMarkers();
         
                 const directionsService = new google.maps.DirectionsService();
-                const directionsDisplay = new google.maps.DirectionsRenderer();
-                directionsDisplay.setMap(map);
+                if(directionsDisplay != null) {
+                    directionsDisplay.setMap(null);
+                    directionsDisplay = null;
+                    directionsDisplay = new google.maps.DirectionsRenderer();
+                }                
+                directionsDisplay.setMap(map); 
+                directionsDisplay.setOptions( { suppressMarkers: true } );
         
                 let request = {
                     origin: place.geometry.location,
