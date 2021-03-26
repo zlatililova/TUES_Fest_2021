@@ -14,14 +14,16 @@ def locations(lat1, lng1, maxRadius = 1000):
         name = None
         lat = None
         lng = None
+        rating = None
 
-        my_place_id = place['place_id']
-        my_fields = ['name','geometry']
-        place_details = gmaps.place(place_id = my_place_id, fields = my_fields)
-        name = place_details['result']['name']
-        lat = place_details['result']['geometry']['location']['lat']
-        lng = place_details['result']['geometry']['location']['lng']
-        locations_dict.append([name, lat, lng])
+        for key in place:
+            if key == 'rating':
+                rating = place[key]
+
+        name = place['name']
+        lat = place['geometry']['location']['lat']
+        lng = place['geometry']['location']['lng']
+        locations_dict.append([name, lat, lng, rating])
     return locations_dict
 
 
@@ -47,14 +49,16 @@ def nearest(lat1,lng1):
     minLng = 0
     minName = ""
     found = False
+    rating1 = None
 
-    for name, lat2, lng2 in places:
+    for name, lat2, lng2, rating in places:
         dist = abs(dist_between_two((lat1,lng1),(lat2,lng2)))
         if dist < minDist:
             minDist = dist
             minLat = lat2
             minLng = lng2
             minName = name
+            rating1 = rating
             found = True
 
-    return(found, minName, minLat, minLng)
+    return(found, minName, minLat, minLng, rating1)

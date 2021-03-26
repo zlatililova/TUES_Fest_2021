@@ -107,6 +107,11 @@ button:hover {
   font-weight: 100;
 }
 
+#infowindow-content-parking {
+  font-size: medium;
+  font-weight: 100;
+}
+
 #pac-input {
   color: #000;
 }
