@@ -11,8 +11,32 @@
 
     <li class="search-icon">
         <input id="pac-input" type="text" placeholder="Enter a location" />
-        
     </li>
+    <div id ="select-input">
+        <select value="parking">
+            <option value="parking">
+                Nearby Parkings
+            </option>
+            <option value="supermarket">
+                Nearby Supermarkets
+            </option>
+
+            <option value="tourist_attraction">
+                Nearby Tourist Attracions
+            </option>
+            
+            <option value="atm">
+                Nearby ATMs
+            </option>
+
+            <option value="bar">
+                Nearby Bars
+            </option>
+            <option value="night_club">
+                Nearby Night Clubs
+            </option>
+        </select>
+    </div>
     <div id="map"></div>
     <div id="infowindow-content">
         <img src="static/images/place-icon-temp.png" width="16" height="16" id="place-icon" />
@@ -23,5 +47,6 @@
         <span id="parking-name" class="title"></span><br />
         <span id="parking-rating"></span>
     </div>
+   
 {% endblock content %}
 
