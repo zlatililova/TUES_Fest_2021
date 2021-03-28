@@ -12,8 +12,13 @@
     <li class="search-icon">
         <input id="pac-input" type="text" placeholder="Enter a location" />
     </li>
-    <div id ="select-input">
-        <select value="parking">
+    <script>
+        function onChange(event) {
+            document.getElementById("select-input").value = event.target.value;
+        }
+        </script>
+    <div onchange="onChange(event)">
+        <select id ="select-input" value="parking" >
             <option value="parking">
                 Nearby Parkings
             </option>
@@ -40,12 +45,13 @@
     <div id="map"></div>
     <div id="infowindow-content">
         <img src="static/images/place-icon-temp.png" width="16" height="16" id="place-icon" />
-        <span id="place-name" class="title"></span><br />
-        <span id="place-address"></span>
+        <span id="origin-name" class="title"></span><br />
+        <span id="origin-address"></span>
     </div>
-    <div id="infowindow-content-parking">
-        <span id="parking-name" class="title"></span><br />
-        <span id="parking-rating"></span>
+    <div id="infowindow-content-destination">
+        <img src="static/images/place-icon-temp.png" width="16" height="16" id="destination-icon" />
+        <span id="destination-name" class="title"></span><br />
+        <span id="destination-rating"></span>
     </div>
    
 {% endblock content %}

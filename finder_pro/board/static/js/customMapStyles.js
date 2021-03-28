@@ -252,7 +252,6 @@ styles: [
 ],
 });
     let parkers = [];
-    const card = document.getElementById("pac-card");
     const input = document.getElementById("pac-input");
     const autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo("bounds", map);
@@ -262,7 +261,7 @@ styles: [
     const infowindow = new google.maps.InfoWindow();
     const infowindowContent = document.getElementById("infowindow-content");
     const infowindowParking = new google.maps.InfoWindow();
-    const infowindowContentParking = document.getElementById("infowindow-content-parking");
+    const infowindowContentParking = document.getElementById("infowindow-content-destination");
     let directionsDisplay = new google.maps.DirectionsRenderer();
     infowindow.setContent(infowindowContent);
     infowindowParking.setContent(infowindowContentParking);
@@ -320,6 +319,7 @@ styles: [
     }
 
     autocomplete.addListener("place_changed", () => {
+        deleteMarkers();
         infowindow.close();
         infowindowParking.close();
         marker.setVisible(false);
@@ -357,19 +357,23 @@ styles: [
             ].join(" ");
         }
         infowindowContent.children["place-icon"].src = place.icon;
-        infowindowContent.children["place-name"].textContent = place.name;
-        infowindowContent.children["place-address"].textContent = address;
+        infowindowContent.children["origin-name"].textContent = place.name;
+        infowindowContent.children["origin-address"].textContent = address;
         infowindow.open(map, marker);
 
+        if(directionsDisplay != null) {
+            directionsDisplay.setMap(null);
+            directionsDisplay = null;
+            directionsDisplay = new google.maps.DirectionsRenderer();
+        }       
 
         const currentLocation = place.geometry.location;
         const origin_location = new google.maps.LatLng(currentLocation.lat(), currentLocation.lng());
-        const origin_type = 'parking';
+        const origin_type = document.getElementById("select-input").value;
         const request = {
             location: origin_location,
-            radius: '10000',
             type: [origin_type],
-            rank_by: "nearest"
+            rankBy: google.maps.places.RankBy.DISTANCE
         };
 
 
@@ -377,29 +381,21 @@ styles: [
         googleMapsService.nearbySearch(request, callback);
         function callback(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                deleteMarkers();
-
-                const {name, lat, lng, rating} = handleResult(results[0]);
+                const {name, lat, lng, rating, icon} = handleResult(results[0]);
                 const parkingLatLng = {lat, lng};
 
                 addMarker(parkingLatLng);
 
                 if (name != null) {
-                    infowindowContentParking.children["parking-name"].textContent = name;
+                    infowindowContentParking.children["destination-icon"].src = icon;
+                    infowindowContentParking.children["destination-name"].textContent = name;
                     if (rating) {
-                        infowindowContentParking.children["parking-rating"].textContent = "Rating: " + rating;
+                        infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating;
                     }
                     infowindowParking.open(map, parkers[0]);
                 }
 
-                console.log(parkingLatLng)
-
-                const directionsService = new google.maps.DirectionsService();
-                if(directionsDisplay != null) {
-                    directionsDisplay.setMap(null);
-                    directionsDisplay = null;
-                    directionsDisplay = new google.maps.DirectionsRenderer();
-                }                
+                const directionsService = new google.maps.DirectionsService();         
                 directionsDisplay.setMap(map); 
                 directionsDisplay.setOptions( { suppressMarkers: true } );
         
@@ -421,8 +417,11 @@ styles: [
                 name: null,
                 lat: null,
                 lng: null,
-                rating: null
+                rating: null,
+                icon: null
             }
+
+            console.log(result)
 
             for(let key in result) {
                 if(key == 'name') {
@@ -435,99 +434,12 @@ styles: [
                 if(key == 'rating') {
                     resultObject['rating'] = result.rating;
                 }
+                if(key == 'icon') {
+                    resultObject['icon'] = result.icon;
+                }
             }
 
             return resultObject;
         }
-        //const xhr = new XMLHttpRequest();
-        //xhr.open('GET', `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentLocation.lat()},151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEYfind/?lat=&lng=${currentLocation.lng()}`);
-        /*xhr.onload = function() {
-            if (xhr.status === 200) {
-                deleteMarkers();
-                const { found, name, lat, lng, rating} = JSON.parse(xhr.responseText);
-
-                if (!found) {
-                    alert('Parking not found!');
-                    return;
-                }
-
-                const parkingLatLng = { lat, lng };
-                
-                addMarker(parkingLatLng);
-    
-                if (name != null) {
-                    infowindowContentParking.children["parking-name"].textContent = name;
-                    if (rating) {
-                        infowindowContentParking.children["parking-rating"].textContent = "Rating: " + rating;
-                    }
-                    infowindowParking.open(map, parkers[0]);
-                }
-
-                
-        
-                const directionsService = new google.maps.DirectionsService();
-                if(directionsDisplay != null) {
-                    directionsDisplay.setMap(null);
-                    directionsDisplay = null;
-                    directionsDisplay = new google.maps.DirectionsRenderer();
-                }                
-                directionsDisplay.setMap(map); 
-                directionsDisplay.setOptions( { suppressMarkers: true } );
-        
-                let request = {
-                    origin: place.geometry.location,
-                    destination: parkingLatLng,
-                    travelMode: google.maps.TravelMode.DRIVING
-                };
-        
-                directionsService.route(request, function(response, status){
-                    if(status = 'OK'){
-                        directionsDisplay.setDirections(response);
-                    }
-                });
-                
-        
-            } else {
-                alert('Request failed.  Returned status of ' + xhr.status);
-            }
-        };
-        xhr.send();*/
     });
-
-/*
-    var request = {
-        location: map.center,
-        radius: 3000,
-        types: ['parking']
-    };
-
-    var places_service = new google.maps.places.PlacesService(map);
-
-    places_service.nearbySearch(request, callback);    */
 }
-
-
-/*
-function callback(results, status) {
-    if(status == google.maps.places.PlacesService.OK){
-        for (var i = 0; i < results.length; i++){
-            marker.push(createMarker(results[i]));
-        }
-    }
-}
-
-function createMarker(place) {
-    var placeLoc = place.geometry.location;
-    var marker = new google.maps.Marker({
-        map: map,
-        position: placeLoc
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-        infowindow.setContent(place.name);
-        infowindow.open(map, this);
-    });
-
-    return marker;
-}*/
-

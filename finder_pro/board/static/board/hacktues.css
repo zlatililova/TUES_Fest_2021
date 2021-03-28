@@ -107,7 +107,7 @@ button:hover {
   font-weight: 100;
 }
 
-#infowindow-content-parking {
+#infowindow-content-destination {
   font-size: medium;
   font-weight: 100;
 }
@@ -243,4 +243,9 @@ nav ul li.btn:hover span:before{
   border: 1px solid #000000;
   border-radius: 3px;
   margin: 60px;
+}
+
+#select-input {
+  width: 25%;
+  margin-left: 37%;
 }
