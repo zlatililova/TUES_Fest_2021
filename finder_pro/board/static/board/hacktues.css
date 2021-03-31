@@ -154,25 +154,27 @@ nav ul li.btn:hover span:before{
   }
   @media screen and (max-width: 800px){
     nav ul li.btn{
-      display: block;
+      display:block;
     }
     nav{
       z-index: 1;
       padding: 9px 40px 9px 0;
     }
     nav ul div.items{
-      z-index: -1;
+      z-index: 1;
       position: fixed;
-      top: -220px;
+      top: -420px;
       right: 0;
       width: 100%;
-      background: #222222;
+      background: #f12e2e;
+      border:#151515;
       display: inline-block;
       transition: top .4s;
-      opacity: 0.9;
+      
     }
     nav ul div.items.show{
-      top: 60px;
+      top: 80px;
+      
     }
     nav ul div.items li{
       text-align: center;
@@ -212,3 +214,22 @@ nav ul li.btn:hover span:before{
   width: 25%;
   margin-left: 37%;
 }
+.select-button {
+  padding: 7px 11px;
+  margin: 10px;
+  margin-right: 25px;
+  border: none;
+  border-radius: 10px;
+  background-color:#b97f7f ;
+  color: white;
+  transition: all 0.3s ease 0s;
+  font-size: 19px;
+}
+
+option {
+  background-color:#ffffff ;
+  color: black;
+  font-size: 19px;
+  border: 10px solid #151515;
+  }
+

@@ -12,23 +12,14 @@
     <li class="search-icon">
         <input id="pac-input" type="text" placeholder="Enter a location" />
     </li>
-    <!--<div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </div>-->
     <script>
         function onChange(event) {
             document.getElementById("select-input").value = event.target.value;
         }
         </script>
+        <h3 class= "text-dark" style = "text-align:center; padding-top: 10px;">Choose type of location you are searching for: </h3>
     <div onchange="onChange(event)">
-        <select id ="select-input" value="parking" >
+        <select class = "select-button" id ="select-input" value="parking" >
             <option value="parking">
                 Nearby Parkings
             </option>
@@ -37,7 +28,7 @@
             </option>
 
             <option value="tourist_attraction">
-                Nearby Tourist Attracions
+                Nearby Tourist Attractions
             </option>
             
             <option value="atm">
