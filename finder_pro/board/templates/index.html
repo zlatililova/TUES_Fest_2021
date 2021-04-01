@@ -2,9 +2,11 @@
 
 {% block head %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initMap&libraries=places&v=weekly" async defer></script>
-    <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
+    <script src="static/js/originDestinationMap.js"></script>
     <script src="static/js/customMapStyles.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initOriginDestinationMap&libraries=places&v=weekly" async defer></script>
+    <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
+
 {% endblock head %}
 
 {% block content %}
