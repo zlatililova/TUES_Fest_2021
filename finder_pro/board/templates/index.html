@@ -2,22 +2,61 @@
 
 {% block head %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initMap&libraries=places&v=weekly" async defer></script>
-    <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
+    <script src="static/js/originDestinationMap.js"></script>
     <script src="static/js/customMapStyles.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initOriginDestinationMap&libraries=places&v=weekly" async defer></script>
+    <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
+
 {% endblock head %}
 
 {% block content %}
 
     <li class="search-icon">
         <input id="pac-input" type="text" placeholder="Enter a location" />
-        
     </li>
+    
+    <script>
+        function onChange(event) {
+            document.getElementById("select-input").value = event.target.value;
+        }
+    </script>
+    <h3 class= "text-dark" style = "text-align:center; padding-top: 10px;">Choose type of location you are searching for: </h3>
+    
+    <div onchange="onChange(event)">
+        <select class = "select-button" id ="select-input" value="parking" >
+            <option value="parking">
+                Nearby Parkings
+            </option>
+            <option value="supermarket">
+                Nearby Supermarkets
+            </option>
+
+            <option value="tourist_attraction">
+                Nearby Tourist Attractions
+            </option>
+            
+            <option value="atm">
+                Nearby ATMs
+            </option>
+
+            <option value="bar">
+                Nearby Bars
+            </option>
+            <option value="night_club">
+                Nearby Night Clubs
+            </option>
+        </select>
+    </div>
     <div id="map"></div>
     <div id="infowindow-content">
-    <img src="static/images/place-icon-temp.png" width="16" height="16" id="place-icon" />
-    <span id="place-name" class="title"></span><br />
-    <span id="place-address"></span>
+        <img src="static/images/place-icon-temp.png" width="16" height="16" id="place-icon" />
+        <span id="origin-name" class="title"></span><br />
+        <span id="origin-address"></span>
     </div>
+    <div id="infowindow-content-destination">
+        <img src="static/images/place-icon-temp.png" width="16" height="16" id="destination-icon" />
+        <span id="destination-name" class="title"></span><br />
+        <span id="destination-rating"></span>
+    </div>
+   
 {% endblock content %}
-

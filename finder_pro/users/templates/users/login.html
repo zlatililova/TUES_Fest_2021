@@ -4,17 +4,17 @@
     <div class ="content-section">
       <form method="POST">
         {% csrf_token %}
-        <fieldset class="form-group">
+        <fieldset class="form-group text-white" >
           <legend class="border-bottom md-4">Log in</legend>
           {{ form|crispy }}
         </fieldset>
         <div class="form-group">
-          <button class="btn btn-outline-info" type="submit">Log in</button>
+          <button class="main-button" type="submit">Log in</button>
         </div>
         </form>
         <div class="border-top pt-3">
-          <small class="text-muted">
-            Need an Account?<a class="ml-2" href="{% url 'register' %}">Sign Up Now</a
+          <small class="text-white">
+            Need an Account?<a class="ml-2 text-warning" href="{% url 'register' %}">Sign Up Now</a
           </small>
         </div>
     </div>

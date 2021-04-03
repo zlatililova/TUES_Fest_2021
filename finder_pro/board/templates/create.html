@@ -1,57 +1,58 @@
 {% extends "base.html" %}
 
 {% block head %}
-<title>Getting LatLng from a Click Event</title>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-<meta charset="utf-8">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="../static/js/createDestinationMap.js"></script>
+    <script src="../static/js/customMapStyles.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initCreateDestinationMap&libraries=places&v=weekly" async defer></script>
+    <link rel="stylesheet" type="text/css" href="../static/board/create_map.css" />
+        
 {% endblock head %}
 
 {% block content %}
-
-<div class="content-section">
-<div id="map"></div>
-<script>
-    function initMap() {
-        var myLatlng = new google.maps.LatLng(42.697708,23.321867);
-        var mapOptions = {
-            zoom: 12,
-            center: myLatlng
+    <script>
+        function onChange(event) {
+            document.getElementById("select-input").value = event.target.value;
         }
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    </script>
 
-        // Place a draggable marker on the map
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            draggable: true,
-            title: "Drag me!"
-        });
-        // Configure the click listener.
-        map.addListener('click', function (mapsMouseEvent) {
-            // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({ position: mapsMouseEvent.latLng });
-            var info = infoWindow.setContent(mapsMouseEvent.latLng.toString());
-        });
-    }
-</script>
-    <br>
-    <div class="form-group">
-        <a class="btn btn-outline-info" onclick="submit()" type="submit"href="{% url 'home' %}">Submit new ParkingPRO location</a>
+    <h1>New Location Type</h1>
+
+    <div onchange="onChange(event)">
+        <select id ="select-input" value="parking" >
+            <option value="parking">
+                Parking
+            </option>
+            <option value="supermarket">
+                Supermarket
+            </option>
+
+            <option value="tourist_attraction">
+                Tourist Attracion
+            </option>
+            
+            <option value="atm">
+                ATM
+            </option>
+
+            <option value="bar">
+                Bar
+            </option>
+            <option value="night_club">
+                Night Club
+            </option>
+        </select>
     </div>
-</div>
 
-<script>
-    const btn = document.getElementById("pac-card");
-    function submit() {
-    alert('Submitted successfully.');
-    return;
-
-};
-
-</script>
-
-<script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initMap&libraries=places&v=weekly">
-</script>
+    <div class="content-section">
+    <div id="map"></div>
+        <div class="form-group">
+            <a class="btn btn-outline-info" id="create_destination">Submit new ParkingPRO location</a>
+        </div>
+        <div id="infowindow-content-new-location">
+            <span id="new-location-name" class="title"></span><br />
+            <span id="new-location-position"></span>
+        </div>
+    </div>
 
 {% endblock content %}
