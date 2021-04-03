@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" type = "text/css" href="{% static 'board/hacktues.css' %}">
+        <link rel="stylesheet" href="{% static 'board/hacktues.css' %}">
         <link rel="stylesheet" href="{% static 'board/about.css' %}">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">   
@@ -22,12 +22,11 @@
         {% block head %}{% endblock head %}
     </head>
 
-
-    <body>
+    <body >
         <nav>
             <ul>
-                <li class="logo">Parking<span style="color: #c1a163;">PRO</span>&nbsp<i class='fas fa-car'></i>
-                </li>
+                <li class="logo">FINDER<span style="color: #FAFAFA;">PRO</span>&nbsp<i class="fas fa-search"></i>
+            </li>
                 <li class="btn"><span class="fas fa-bars"></span></li>
                 <div class="items">
                     <li><a href="{% url 'home' %}">Home</a></li>
@@ -37,6 +36,7 @@
                 {% else %}
                 <li><a href="">Create</a></li>
                 {% endif %}
+
                     
                     
                     <li><a href="{% url 'profile' %}">Profile</button></a>
