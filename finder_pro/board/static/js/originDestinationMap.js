@@ -1,8 +1,8 @@
 function initOriginDestinationMap() {
     let map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 42.697708, lng: 23.321867 },
-    zoom: 12,
-    styles: getCustomMapStyles(),
+        center: { lat: 42.697708, lng: 23.321867 },
+        zoom: 12,
+        styles: getCustomMapStyles(),
     });
     let dmarkers = [];
     const input = document.getElementById("pac-input");
@@ -102,6 +102,7 @@ function initOriginDestinationMap() {
     }
 
     function handleResult(result) {
+        console.log(result);
         resultObject = {
             name: null,
             lat: null,
@@ -144,7 +145,6 @@ function initOriginDestinationMap() {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 const {name, lat, lng, rating, icon} = handleResult(results[0]);
                 const destinationLatLng = {lat, lng};
-                console.log(results[0]);
                 addMarker(destinationLatLng, destination_type);
 
                 if (name != null) {

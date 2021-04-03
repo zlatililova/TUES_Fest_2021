@@ -5,17 +5,53 @@
     <script src="../static/js/createDestinationMap.js"></script>
     <script src="../static/js/customMapStyles.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initCreateDestinationMap&libraries=places&v=weekly" async defer></script>
-    <link rel="stylesheet" type="text/css" href="../static/board/hacktues.css" />
+    <link rel="stylesheet" type="text/css" href="../static/board/create_map.css" />
         
 {% endblock head %}
 
 {% block content %}
+    <script>
+        function onChange(event) {
+            document.getElementById("select-input").value = event.target.value;
+        }
+    </script>
+
+    <h1>New Location Type</h1>
+
+    <div onchange="onChange(event)">
+        <select id ="select-input" value="parking" >
+            <option value="parking">
+                Parking
+            </option>
+            <option value="supermarket">
+                Supermarket
+            </option>
+
+            <option value="tourist_attraction">
+                Tourist Attracion
+            </option>
+            
+            <option value="atm">
+                ATM
+            </option>
+
+            <option value="bar">
+                Bar
+            </option>
+            <option value="night_club">
+                Night Club
+            </option>
+        </select>
+    </div>
 
     <div class="content-section">
     <div id="map"></div>
-        <br>
         <div class="form-group">
-            <a class="btn btn-outline-info" onclick="submit()" type="submit"href="{% url 'home' %}">Submit new ParkingPRO location</a>
+            <a class="btn btn-outline-info" id="create_destination">Submit new ParkingPRO location</a>
+        </div>
+        <div id="infowindow-content-new-location">
+            <span id="new-location-name" class="title"></span><br />
+            <span id="new-location-position"></span>
         </div>
     </div>
 
