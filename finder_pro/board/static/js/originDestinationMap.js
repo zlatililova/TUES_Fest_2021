@@ -169,6 +169,53 @@ function initOriginDestinationMap() {
         return resultObject;
     }
 
+    function displayOnMapDestination(origin_location, nearestResult, destination_type) {
+        const {name, position, rating, icon} = nearestResult;
+        const destinationLatLng = position;
+        addMarker(destinationLatLng, destination_type);
+
+        if (name != null) {
+            infowindowContentParking.children["destination-icon"].src = icon;
+            infowindowContentParking.children["destination-name"].textContent = name;
+            if (rating) {
+                infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating;
+            }
+            infowindowParking.open(map, dmarkers[0]);
+        }
+
+        const directionsService = new google.maps.DirectionsService();         
+        directionsDisplay.setMap(map); 
+        directionsDisplay.setOptions( { suppressMarkers: true } );
+
+        let request = {
+            origin: origin_location,
+            destination: destinationLatLng,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        directionsService.route(request, function(response, status){
+            if(status == 'OK'){
+                directionsDisplay.setDirections(response);
+            }
+        });
+
+        const distanceMatrixService = new google.maps.DistanceMatrixService();
+        distanceMatrixService.getDistanceMatrix(
+        {
+            origins: [origin_location],
+            destinations: [destinationLatLng],
+            travelMode: google.maps.TravelMode.DRIVING,
+            drivingOptions: {
+                departureTime: new Date(Date.now()),
+                trafficModel: 'optimistic'
+            }
+        }, function(response, status) {
+            if (status == 'OK') {
+                console.log("ADD Later", response.rows[0].elements[0]);
+            }
+        });
+    }
+
     function getDistanceFromLatLng(origin_location, nearbyResultPosition) {
         const lat1 = origin_location.lat();
         const lng1 = origin_location.lng();
@@ -215,53 +262,6 @@ function initOriginDestinationMap() {
             .then(function(snapshot) {
                 getNearest(origin_location, nearbySearchResult, snapshot.val(), destination_type);
             });
-    }
-
-    function displayOnMapDestination(origin_location, nearestResult, destination_type) {
-        const {name, position, rating, icon} = nearestResult;
-        const destinationLatLng = position;
-        addMarker(destinationLatLng, destination_type);
-
-        if (name != null) {
-            infowindowContentParking.children["destination-icon"].src = icon;
-            infowindowContentParking.children["destination-name"].textContent = name;
-            if (rating) {
-                infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating;
-            }
-            infowindowParking.open(map, dmarkers[0]);
-        }
-
-        const directionsService = new google.maps.DirectionsService();         
-        directionsDisplay.setMap(map); 
-        directionsDisplay.setOptions( { suppressMarkers: true } );
-
-        let request = {
-            origin: origin_location,
-            destination: destinationLatLng,
-            travelMode: google.maps.TravelMode.DRIVING
-        };
-
-        directionsService.route(request, function(response, status){
-            if(status == 'OK'){
-                directionsDisplay.setDirections(response);
-            }
-        });
-
-        const distanceMatrixService = new google.maps.DistanceMatrixService();
-        distanceMatrixService.getDistanceMatrix(
-        {
-            origins: [origin_location],
-            destinations: [destinationLatLng],
-            travelMode: google.maps.TravelMode.DRIVING,
-            drivingOptions: {
-                departureTime: new Date(Date.now()),
-                trafficModel: 'optimistic'
-            }
-        }, function(response, status) {
-            if (status == 'OK') {
-                console.log("ADD Later", response.rows[0].elements[0]);
-            }
-        });
     }
 
     function prepareAsync(origin_location, destination_type) {
