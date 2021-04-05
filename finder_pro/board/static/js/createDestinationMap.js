@@ -1,5 +1,5 @@
 function initCreateDestinationMap() {
-    const zoom_level_for_tiles = 9;
+    const zoom_level_for_tiles = 10;
     const select = document.getElementById("select-input");
     const infowindowNewLocation = new google.maps.InfoWindow();
     const infowindowContentNewLocation = document.getElementById("infowindow-content-new-location");
