@@ -2,6 +2,7 @@
 
 {% block head %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="static/js/getTileIdFromLocation.js"></script>
     <script src="static/js/originDestinationMap.js"></script>
     <script src="static/js/customMapStyles.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initOriginDestinationMap&libraries=places&v=weekly" async defer></script>
@@ -20,9 +21,10 @@
             document.getElementById("select-input").value = event.target.value;
         }
     </script>
-
+    <h3 class= "text-dark" style = "text-align:center; padding-top: 10px;">Choose type of location you are searching for: </h3>
+    
     <div onchange="onChange(event)">
-        <select id ="select-input" value="parking" >
+        <select class = "select-button" id ="select-input" value="parking" >
             <option value="parking">
                 Nearby Parkings
             </option>
@@ -31,7 +33,7 @@
             </option>
 
             <option value="tourist_attraction">
-                Nearby Tourist Attracions
+                Nearby Tourist Attractions
             </option>
             
             <option value="atm">
