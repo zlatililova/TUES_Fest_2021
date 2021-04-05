@@ -2,8 +2,13 @@ function initOriginDestinationMap() {
     let map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 42.697708, lng: 23.321867 },
         zoom: 12,
+        minZoom: 11,
         styles: getCustomMapStyles(),
+        disableDefaultUI: true,
+        streetViewControl: true,
+        fullscreenControl: true
     });
+    const zoom_level_for_tiles = 9;
     let dmarkers = [];
     const input = document.getElementById("pac-input");
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -21,6 +26,7 @@ function initOriginDestinationMap() {
     let place = null;
     let origin_location = null;
     const select = document.getElementById("select-input");
+    let DBLocations = null;
 
     const svgMarker = {
         path: "M38.831,14.26c-0.191-0.233-0.476-0.369-0.775-0.369h-3.801c-0.938-2.474-2.16-4.898-3.549-5.813c-4.805-3.161-17.55-3.161-22.355,0c-1.39,0.916-2.607,3.343-3.55,5.813H1c-0.302,0-0.586,0.136-0.775,0.369c-0.19,0.232-0.266,0.539-0.204,0.834l0.563,2.728c0.096,0.465,0.506,0.797,0.979,0.797h1.126c-1.087,1.254-1.614,2.833-1.621,4.413c-0.007,1.952,0.734,3.716,2.089,4.964c0.015,0.013,0.03,0.022,0.044,0.035v3.817c0,0.827,0.672,1.5,1.5,1.5h3.506c0.828,0,1.5-0.673,1.5-1.5v-1.534h19.641v1.534c0,0.827,0.672,1.5,1.5,1.5h3.506c0.826,0,1.5-0.673,1.5-1.5v-3.742c1.438-1.317,2.125-3.129,2.134-4.938c0.006-1.634-0.545-3.271-1.696-4.551h1.201c0.475,0,0.885-0.332,0.979-0.798l0.564-2.727C39.094,14.799,39.021,14.494,38.831,14.26z M9.998,10.583c3.83-2.521,15.229-2.521,19.057,0c0.744,0.488,1.701,2.461,2.578,4.877H7.422C8.297,13.045,9.254,11.073,9.998,10.583zM5.512,23.408c0-1.63,1.322-2.95,2.951-2.95c1.631,0,2.951,1.32,2.951,2.95s-1.32,2.951-2.951,2.951C6.834,26.359,5.512,25.038,5.512,23.408z M30.631,26.359c-1.629,0-2.951-1.321-2.951-2.951s1.322-2.95,2.951-2.95c1.631,0,2.951,1.32,2.951,2.95S32.26,26.359,30.631,26.359z",
@@ -101,12 +107,45 @@ function initOriginDestinationMap() {
         dmarkers = [];
     }
 
-    function handleResult(result) {
-        console.log(result);
+    function handleDBLocationResult(result) {
+
         resultObject = {
             name: null,
-            lat: null,
-            lng: null,
+            position: {
+                lat: null,
+                lng: null
+            },
+            rating: null,
+            icon: null
+        }
+
+        for(let key in result) {
+            if(key == 'name') {
+                resultObject['name'] = result.name
+            }
+            if(key == 'position') {
+                resultObject['position']['lat'] = result['position']['lat'];
+                resultObject['position']['lng'] = result['position']['lng'];
+            }
+            if(key == 'rating') {
+                resultObject['rating'] = result['rating'];
+            }
+            if(key == 'icon') {
+                resultObject['icon'] = result['icon'];
+            }
+        }
+
+        return resultObject;
+    }
+
+    function handleNearbySearchResult(result) {
+
+        resultObject = {
+            name: null,
+            position: {
+                lat: null,
+                lng: null
+            },
             rating: null,
             icon: null
         }
@@ -116,8 +155,8 @@ function initOriginDestinationMap() {
                 resultObject['name'] = result.name
             }
             if(key == 'geometry') {
-                resultObject['lat'] = result.geometry.location.lat();
-                resultObject['lng'] = result.geometry.location.lng();
+                resultObject['position']['lat'] = result.geometry.location.lat();
+                resultObject['position']['lng'] = result.geometry.location.lng();
             }
             if(key == 'rating') {
                 resultObject['rating'] = result.rating;
@@ -130,7 +169,103 @@ function initOriginDestinationMap() {
         return resultObject;
     }
 
-    function displayOnMapDestination(place, origin_location, destination_type) {
+    function displayOnMapDestination(origin_location, nearestResult, destination_type) {
+        const {name, position, rating, icon} = nearestResult;
+        const destinationLatLng = position;
+        addMarker(destinationLatLng, destination_type);
+
+        if (name != null) {
+            infowindowContentParking.children["destination-icon"].src = icon;
+            infowindowContentParking.children["destination-name"].textContent = name;
+            if (rating) {
+                infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating;
+            }
+            infowindowParking.open(map, dmarkers[0]);
+        }
+
+        const directionsService = new google.maps.DirectionsService();         
+        directionsDisplay.setMap(map); 
+        directionsDisplay.setOptions( { suppressMarkers: true } );
+
+        let request = {
+            origin: origin_location,
+            destination: destinationLatLng,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        directionsService.route(request, function(response, status){
+            if(status == 'OK'){
+                directionsDisplay.setDirections(response);
+            }
+        });
+
+        const distanceMatrixService = new google.maps.DistanceMatrixService();
+        distanceMatrixService.getDistanceMatrix(
+        {
+            origins: [origin_location],
+            destinations: [destinationLatLng],
+            travelMode: google.maps.TravelMode.DRIVING,
+            drivingOptions: {
+                departureTime: new Date(Date.now()),
+                trafficModel: 'optimistic'
+            }
+        }, function(response, status) {
+            if (status == 'OK') {
+                console.log("ADD Later", response.rows[0].elements[0]);
+            }
+        });
+    }
+
+    function getDistanceFromLatLng(origin_location, nearbyResultPosition) {
+        const lat1 = origin_location.lat();
+        const lng1 = origin_location.lng();
+        const lat2 = nearbyResultPosition.lat;
+        const lng2 = nearbyResultPosition.lng;
+        const R = 6371000;
+        const phi1 = lat1 * Math.PI/180;
+        const phi2 = lat2 * Math.PI/180;
+        const DPhi = (lat2-lat1) * Math.PI/180;
+        const DLamb = (lng2-lng1) * Math.PI/180;
+
+        const a = Math.sin(DPhi/2) * Math.sin(DPhi/2) +
+                Math.cos(phi1) * Math.cos(phi2) *
+                Math.sin(DLamb/2) * Math.sin(DLamb/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        const d = R * c;
+        return d;
+    }
+
+    function getNearest(origin_location, nearbySearchResult, DBLocations, destination_type) {
+        let nearestLocationName = null;
+        let minimalDistance = getDistanceFromLatLng(origin_location, nearbySearchResult.position);
+        for(let key in DBLocations) {
+            let currentDistance = getDistanceFromLatLng(origin_location, DBLocations[key].position)
+            if (minimalDistance > currentDistance) {
+                minimalDistance = currentDistance;
+                nearestLocationName = key;
+            }
+        }
+
+        if (nearestLocationName == null) {
+            displayOnMapDestination(origin_location, nearbySearchResult, destination_type);
+        } else {
+            const nearestResult = handleDBLocationResult(DBLocations[nearestLocationName]);
+            displayOnMapDestination(origin_location, nearestResult, destination_type);
+        }
+
+        
+    }
+
+    async function getNearestFrom(origin_location, nearbySearchResult, DBLocationsListRef, destination_type) {
+        return await DBLocationsListRef.once("value")
+            .then(function(snapshot) {
+                getNearest(origin_location, nearbySearchResult, snapshot.val(), destination_type);
+            });
+    }
+
+    function prepareAsync(origin_location, destination_type) {
+        
         deleteMarkers();
         infowindowParking.close();
         const request = {
@@ -139,38 +274,16 @@ function initOriginDestinationMap() {
             rankBy: google.maps.places.RankBy.DISTANCE
         };
 
+        const {x, y} = getTileIdObjectFromLocation(origin_location, zoom_level_for_tiles);
+        
+        const DBLocationListRef = firebase.database().ref("Locations/" + getStringFromXY(x, y) + "/" + destination_type);
 
         const googleMapsService = new google.maps.places.PlacesService(map);
         googleMapsService.nearbySearch(request, function callback(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-                const {name, lat, lng, rating, icon} = handleResult(results[0]);
-                const destinationLatLng = {lat, lng};
-                addMarker(destinationLatLng, destination_type);
-
-                if (name != null) {
-                    infowindowContentParking.children["destination-icon"].src = icon;
-                    infowindowContentParking.children["destination-name"].textContent = name;
-                    if (rating) {
-                        infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating;
-                    }
-                    infowindowParking.open(map, dmarkers[0]);
-                }
-
-                const directionsService = new google.maps.DirectionsService();         
-                directionsDisplay.setMap(map); 
-                directionsDisplay.setOptions( { suppressMarkers: true } );
-        
-                let request = {
-                    origin: place.geometry.location,
-                    destination: destinationLatLng,
-                    travelMode: google.maps.TravelMode.DRIVING
-                };
-        
-                directionsService.route(request, function(response, status){
-                    if(status == 'OK'){
-                        directionsDisplay.setDirections(response);
-                    }
-                });
+                const nearbySearchResult = handleNearbySearchResult(results[0]);
+                getNearestFrom(origin_location, nearbySearchResult, DBLocationListRef, destination_type);
+                
             }
         });
     }
@@ -191,7 +304,7 @@ function initOriginDestinationMap() {
             map.fitBounds(place.geometry.viewport);
         } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(15); 
+            map.setZoom(13); 
         }
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
@@ -224,15 +337,14 @@ function initOriginDestinationMap() {
         const currentLocation = place.geometry.location;
         origin_location = new google.maps.LatLng(currentLocation.lat(), currentLocation.lng());
         let destination_type = document.getElementById("select-input").value;
-        
-        displayOnMapDestination(place, origin_location, destination_type);
+
+        prepareAsync(origin_location, destination_type);
     });
 
     select.addEventListener("change", function() {
         deleteMarkers(); 
-        console.log("markers", dmarkers);
         infowindowParking.close();
         destination_type = select.value;
-        displayOnMapDestination(place, origin_location, destination_type); 
+        prepareAsync(origin_location, destination_type); 
     });
 }

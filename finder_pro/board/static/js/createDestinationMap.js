@@ -1,5 +1,5 @@
 function initCreateDestinationMap() {
-
+    const zoom_level_for_tiles = 9;
     const select = document.getElementById("select-input");
     const infowindowNewLocation = new google.maps.InfoWindow();
     const infowindowContentNewLocation = document.getElementById("infowindow-content-new-location");
@@ -13,7 +13,7 @@ function initCreateDestinationMap() {
     const button = document.getElementById("create_destination");
     
     const marker = new google.maps.Marker({
-        position: { lat: 42.697708, lng: 23.321867 },
+        position: { lat: 42.69821264238199, lng: 23.32152367724611},
         map: map,
         draggable: true,
         title: "Drag To New Location"
@@ -53,11 +53,17 @@ function initCreateDestinationMap() {
     });
 
     button.addEventListener("click", function (){
-        const locationListRef = firebase.database().ref("Locations");
         const newLocationName = getLocationNameFromType(select.value);
         const newLocationType = select.value;
+        
+        const tileIdString = getTileIdFromLocation(marker.position, zoom_level_for_tiles);
+        console.log(tileIdString);
+        const locationListRef = firebase.database().ref("Locations/" + tileIdString + "/" + newLocationType);
+        
         const lat = marker.position.lat();
         const lng = marker.position.lng();
+
+        
         
         const NewLocation = locationListRef.push();
         NewLocation.set({ 
