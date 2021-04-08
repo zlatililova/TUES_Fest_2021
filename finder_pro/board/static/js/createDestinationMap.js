@@ -55,6 +55,7 @@ function initCreateDestinationMap() {
                 infowindowContentNewLocation.children["new-location-address"].textContent = results[2].formatted_address
             }
         });
+        infowindowContentNewLocation.style["display"] = "block";
         infowindowNewLocation.open(map, marker);
     });
 
