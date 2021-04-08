@@ -28,7 +28,6 @@ nav ul{
 nav ul li.logo{
   flex: 1;
   font-size: 30px;
-  font-weight: 700;
   color: #f12e2e;
   cursor: pointer;
 }
@@ -226,6 +225,11 @@ nav ul li.btn:hover span:before{
 }
 
 #select-input {
+  width: 26%;
+  margin-left: 37%;
+}
+
+#select-map-setting {
   width: 26%;
   margin-left: 37%;
 }

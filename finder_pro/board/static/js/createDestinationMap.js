@@ -40,21 +40,11 @@ function initCreateDestinationMap() {
     marker.addListener('position_changed', function() {
         infowindowContentNewLocation.children["new-location-name"].textContent = getLocationNameFromType(select.value);
         infowindowContentNewLocation.children["new-location-position"].textContent = "Lat: " + marker.position.lat() + " Lng: " + marker.position.lng();
-        geocoder.geocode({location: {lat: marker.position.lat(), lng: marker.position.lng()}}, function(results, status) {
-            if (status === "OK") {
-                infowindowContentNewLocation.children["new-location-address"].textContent = results[2].formatted_address
-            }
-        })
     });
 
     marker.addListener('mouseover', function() {
         infowindowContentNewLocation.children["new-location-name"].textContent = getLocationNameFromType(select.value);
         infowindowContentNewLocation.children["new-location-position"].textContent = "Lat: " + marker.position.lat() + " Lng: " + marker.position.lng();
-        geocoder.geocode({location: {lat: marker.position.lat(), lng: marker.position.lng()}}, function(results, status) {
-            if (status === "OK") {
-                infowindowContentNewLocation.children["new-location-address"].textContent = results[2].formatted_address
-            }
-        });
         infowindowContentNewLocation.style["display"] = "block";
         infowindowNewLocation.open(map, marker);
     });
