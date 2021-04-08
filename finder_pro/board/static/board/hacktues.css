@@ -54,10 +54,9 @@ nav ul div.items a:hover{
 
 .search-icon{
   margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 32%;
   height: 40px;
-  width: 35%;
+  width: 36%;
   display: flex;
   background: #f2f2f2;
   border-style: groove;
@@ -219,9 +218,10 @@ nav ul li.btn:hover span:before{
 }
 
 #select-input {
-  width: 25%;
+  width: 26%;
   margin-left: 37%;
 }
+
 .select-button {
   padding: 7px 11px;
   margin: 10px;
