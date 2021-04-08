@@ -43,6 +43,7 @@
                 </div>
                 {% if user.is_authenticated != 0 %}
                 <a class="asp" href="{% url 'logout' %}"><button class="main-button">Log out</button></a>
+                <a class="asp" href="{% url 'settings' %}"><button class="main-button">Settings</button></a>
                 {% else %}
                 
                 <a class="asp" href="{% url 'login' %}"><button class="main-button">Log in</button></a>

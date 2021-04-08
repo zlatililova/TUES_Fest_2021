@@ -14,6 +14,9 @@ def about(request):
 def create(request):
     return render(request, 'create.html')
 
+def settings(request):
+    return render(request, 'settings.html')
+
 class AddPlaceView(CreateView):
         model = Location
         template_name = "create.html"

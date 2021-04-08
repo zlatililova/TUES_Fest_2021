@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="../static/js/Cookie.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/board/hacktues.css" />
+    <script src="../static/js/settings.js"></script>
+{% endblock head %}
+
+{% block content %}
+
+<h3 class= "text-dark" style = "text-align:center; padding-top: 10px;">Choose Map Theme: </h3>
+
+    <div onchange="mapSetting()">
+        <select class="select-button" id="select-map-setting" value="">
+            <option id="first-option" value="default">
+                Light Mode
+            </option>
+            <option id="second-option" value="darkMode">
+                Dark Mode
+            </option>
+        </select>
+    </div>
+
+    <script>
+        const selectmapSetting = document.getElementById("select-map-setting");
+        const cookie = getCookie("mapSetting");
+        if(cookie != "") {
+            selectmapSetting.value = cookie;
+        }
+        else {
+            selectmapSetting.value = "default";
+            setCookie("mapSetting", "default", 10);
+        }
+        
+    </script>
+
+{% endblock content %}

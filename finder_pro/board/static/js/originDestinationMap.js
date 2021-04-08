@@ -1,5 +1,4 @@
 function initOriginDestinationMap() {
-    console.log(getCookie("mapSetting"))
     if (getCookie("mapSetting") == "") {
         setCookie("mapSetting", "default", 10);
     }
@@ -20,8 +19,6 @@ function initOriginDestinationMap() {
     let place = null;
     let origin_location = null;
     const select = document.getElementById("select-input");
-    const selectmapSetting = document.getElementById("select-map-setting");
-    selectmapSetting.value = getCookie("mapSetting");
     
 
     const svgMarker = {
@@ -49,34 +46,6 @@ function initOriginDestinationMap() {
     autocomplete.setFields(["address_components", "geometry", "icon", "name"]);
     autocomplete.setTypes(["geocode"]);
     autocomplete.setOptions({ strictBounds: true });
-
-
-    function swapMapSettingSelectValue() {
-        let selectmapSetting = document.getElementById("select-map-setting");
-        switch(selectmapSetting.value) {
-            case "darkMode":
-                selectmapSetting.value = "default";
-                break;
-            case "default":
-                selectmapSetting.value = "darkMode";
-                break;
-        }
-    }
-
-    function swapSelectMapSettingValues() {
-        
-        let selectmapSetting = document.getElementById("select-map-setting");
-
-
-        const selectmapSettingFirstOptionInnerHtml = selectmapSetting.children['first-option'].innerHTML;
-        const selectmapSettingFirstOptionValue = selectmapSetting.children['first-option'].value;
-        selectmapSetting.children['first-option'].innerHTML = selectmapSetting.children['second-option'].innerHTML;
-        selectmapSetting.children['first-option'].value = selectmapSetting.children['second-option'].value;
-        selectmapSetting.children['second-option'].innerHTML = selectmapSettingFirstOptionInnerHtml;
-        selectmapSetting.children['second-option'].value = selectmapSettingFirstOptionValue;
-        console.log(selectmapSetting.value)
-
-    }
 
     function createSvgDMarker(svg_marker_path, size) {
         const svgDMarker = {
@@ -111,6 +80,9 @@ function initOriginDestinationMap() {
             case 'night_club':
                 return createSvgDMarker("M27.7 10.7c.3-.3.3-.7.2-1.1-.1-.4-.5-.6-.9-.6H12.4L9 4.7l4.5-2.9c.4-.2.5-.7.4-1.1-.1-.4-.5-.7-.9-.7H5c-.4 0-.8.2-.9.6l-3 7c-.2.4-.1.9.3 1.2.1.1.4.2.6.2.2 0 .4-.1.5-.2l4.8-3.1L9.8 9H5c-.4 0-.8.2-.9.6-.2.4-.1.8.2 1.1L15 22.4V30h-3c-.6 0-1 .4-1 1s.4 1 1 1h8c.6 0 1-.4 1-1s-.4-1-1-1h-3v-7.6l10.7-11.7zm-3 .3l-1.8 2h-7.4l-1.6-2h10.8zm-13.3 0l1.6 2H9.1l-1.8-2h4.1z",
                 1);
+            case 'lodging':
+                return createSvgDMarker("M265.232 130.91H29.358V63.853c0-8.112-6.574-14.678-14.681-14.678C6.573 49.175 0 55.746 0 63.853v152.205c0 8.114 6.573 14.68 14.678 14.68 8.112 0 14.681-6.576 14.681-14.68v-7.349h221.199v7.349c0 8.114 6.57 14.68 14.675 14.68 8.115 0 14.681-6.576 14.681-14.68V145.59c.004-8.106-6.566-14.68-14.682-14.68zm-14.674 59.859c-5.713-2.939-10.38-2.498-16.402 1.341-10.41 6.642-24.436 6.642-34.85 0-6.82-4.356-11.908-4.356-18.733 0-10.42 6.642-24.445 6.642-34.854 0-6.83-4.356-11.911-4.356-18.738 0-10.415 6.642-24.44 6.642-34.855 0-6.822-4.356-11.908-4.356-18.735 0-10.41 6.642-24.438 6.642-34.853 0-3.339-2.128-6.261-3.163-9.184-3.199v-5.891c4.009.025 8.018 1.382 12.334 4.134 8.536 5.438 20.018 5.438 28.546 0 8.777-5.596 16.265-5.596 25.037 0 8.538 5.438 20.02 5.438 28.548 0 8.777-5.596 16.265-5.596 25.037 0 8.541 5.438 20.018 5.438 28.549 0 8.774-5.596 16.265-5.596 25.034 0 8.531 5.438 20.018 5.438 28.549 0 6.885-4.388 12.999-5.251 19.55-2.732v6.348h.02z M33.7 94.164v33.085h32.131c9.141-9.135 9.141-23.956 0-33.085-9.138-9.136-22.996-9.136-32.131 0z",
+                0.1);
             default:
                 return createSvgDMarker("m425.941 0h-393.176c-18.094 0-32.765 14.671-32.765 32.765v393.176c0 18.094 14.671 32.765 32.765 32.765h393.176c18.094 0 32.765-14.671 32.765-32.765v-393.176c0-18.094-14.671-32.765-32.765-32.765zm-196.588 294.882h-32.765v65.529h-65.529v-262.117h98.294c54.203 0 98.294 44.091 98.294 98.294s-44.091 98.294-98.294 98.294z", 0.01);
         }
@@ -409,10 +381,4 @@ function initOriginDestinationMap() {
         }   
     });
 
-    selectmapSetting.addEventListener("change", function() {
-        setCookie("mapSetting", selectmapSetting.value, 10);
-        swapMapSettingSelectValue();
-        swapSelectMapSettingValues();
-        map.styles = getCustomMapStyles(selectmapSetting.value);
-    });
 }
