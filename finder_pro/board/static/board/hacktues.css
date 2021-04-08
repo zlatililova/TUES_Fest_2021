@@ -78,6 +78,7 @@ nav ul div.items a:hover{
 
 
 .main-button {
+  text-align: center;
   padding: 7px 11px;
   margin: 10px;
   margin-right: 25px;
@@ -100,6 +101,13 @@ button:hover {
   position: relative;
   margin: auto;
   margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#infowindow-content-travel-params {
+  width: 50%;
+  text-align: center;
+  margin-left: 25%;
 }
 
 #infowindow-content {

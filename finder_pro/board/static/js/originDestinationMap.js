@@ -169,16 +169,18 @@ function initOriginDestinationMap() {
         return resultObject;
     }
 
-    function displayOnMapDestination(origin_location, nearestResult, destination_type) {
-        const {name, position, rating, icon} = nearestResult;
-        const destinationLatLng = position;
-        addMarker(destinationLatLng, destination_type);
-
+    function displayNameAddressDirections(name, position, rating, icon, address, destinationLatLng) {
         if (name != null) {
             infowindowContentParking.children["destination-icon"].src = icon;
             infowindowContentParking.children["destination-name"].textContent = name;
             if (rating) {
-                infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating;
+                infowindowContentParking.children["destination-rating"].textContent = "Rating: " + rating + "\n";
+                linebreak = document.createElement("br");
+                infowindowContentParking.children["destination-rating"].appendChild(linebreak);
+            }
+
+            if (address) {
+                infowindowContentParking.children["destination-address"].textContent = address;
             }
             infowindowParking.open(map, dmarkers[0]);
         }
@@ -211,9 +213,25 @@ function initOriginDestinationMap() {
             }
         }, function(response, status) {
             if (status == 'OK') {
-                infowindowContentTravelParams.children["travel-params-time"].textContent = response.rows[0].elements[0].duration_in_traffic.text;
-                infowindowContentTravelParams.children["travel-params-distance"].textContent = response.rows[0].elements[0].distance.text;
+                infowindowContentTravelParams.children["travel-params"].textContent = "Duration: " + response.rows[0].elements[0].duration_in_traffic.text + ", Distance: " + response.rows[0].elements[0].distance.text;; 
+                infowindowContentTravelParams.style["display"] = "block" 
             }
+        });
+    }
+
+    function displayOnMapDestination(nearestResult, destination_type) {
+        const {name, position, rating, icon} = nearestResult;
+        const destinationLatLng = position;
+        let address = null;
+        addMarker(destinationLatLng, destination_type);
+
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({location: destinationLatLng}, function(results, status) {
+            if (status === "OK") {
+                address = results[2].formatted_address;
+            }
+            displayNameAddressDirections(name, position, rating, icon, address, destinationLatLng);
         });
     }
 
@@ -249,10 +267,10 @@ function initOriginDestinationMap() {
         }
 
         if (nearestLocationName == null) {
-            displayOnMapDestination(origin_location, nearbySearchResult, destination_type);
+            displayOnMapDestination(nearbySearchResult, destination_type);
         } else {
             const nearestResult = handleDBLocationResult(DBLocations[nearestLocationName]);
-            displayOnMapDestination(origin_location, nearestResult, destination_type);
+            displayOnMapDestination(nearestResult, destination_type);
         }
 
         

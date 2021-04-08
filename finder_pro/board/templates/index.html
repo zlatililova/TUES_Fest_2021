@@ -48,20 +48,20 @@
             </option>
         </select>
     </div>
-    <div id="infowindow-content-travel-params">
-        <span id="travel-params-time" class="title"></span><br />
-        <span id="travel-params-distance"></span>
+    <div id="infowindow-content-travel-params" style="display: none;">
+        <span id="travel-params" class="title"></span>
     </div>
     <div id="map"></div>
     <div id="infowindow-content">
-        <img src="static/images/place-icon-temp.png" width="16" height="16" id="place-icon" />
+        <img src="static/images/place-icon-temp.png" style="display: none;" width="16" height="16" id="place-icon" />
         <span id="origin-name" class="title"></span><br />
         <span id="origin-address"></span>
     </div>
     <div id="infowindow-content-destination">
-        <img src="static/images/place-icon-temp.png" width="16" height="16" id="destination-icon" />
+        <img src="static/images/place-icon-temp.png" style="display: none;" width="16" height="16" id="destination-icon" />
         <span id="destination-name" class="title"></span><br />
         <span id="destination-rating"></span>
+        <span id="destination-address" class="title"></span>
     </div>
    
 {% endblock content %}
