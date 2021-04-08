@@ -5,6 +5,7 @@
     <script src="static/js/getTileIdFromLocation.js"></script>
     <script src="static/js/originDestinationMap.js"></script>
     <script src="static/js/customMapStyles.js"></script>
+    <script src="static/js/Cookie.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initOriginDestinationMap&libraries=places&v=weekly" async defer></script>
     <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
 
@@ -18,9 +19,10 @@
     
     <script>
         function onChange(event) {
-            document.getElementById("select-input").value = event.target.value;
+            document.getElementById(event.srcElement.id).value = event.target.value;
         }
     </script>
+
     <h3 class= "text-dark" style = "text-align:center; padding-top: 10px;">Choose type of location you are searching for: </h3>
     
     <div onchange="onChange(event)">
@@ -48,6 +50,18 @@
             </option>
         </select>
     </div>
+
+    <div >
+        <select class="select-button" id="select-map-setting" value="">
+            <option id="first-option" value="default">
+                Light Mode
+            </option>
+            <option id="second-option" value="darkMode">
+                Dark Mode
+            </option>
+        </select>
+    </div>
+
     <div id="infowindow-content-travel-params" style="display: none;">
         <span id="travel-params" class="title"></span>
     </div>
