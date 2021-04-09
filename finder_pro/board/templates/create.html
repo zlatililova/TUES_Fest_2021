@@ -2,10 +2,12 @@
 
 {% block head %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="../static/js/getCurrentUserLocationAndZoomLevel.js"></script>
     <script src="../static/js/getTileIdFromLocation.js"></script>
     <script src="../static/js/createDestinationMap.js"></script>
     <script src="../static/js/customMapStyles.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=initCreateDestinationMap&libraries=places&v=weekly" async defer></script>
+    <script src="../static/js/Cookie.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=getCurrentUserLocationAndZoomLevel&libraries=places&v=weekly" async defer></script>
     <link rel="stylesheet" type="text/css" href="../static/board/create_map.css" />
         
 {% endblock head %}
@@ -41,6 +43,9 @@
             </option>
             <option value="night_club">
                 Night Club
+            </option>
+            <option value="lodging">
+                Hotel
             </option>
         </select>
     </div>

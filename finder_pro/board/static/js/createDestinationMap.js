@@ -1,4 +1,10 @@
-function initCreateDestinationMap() {
+function initCreateDestinationMap(returnObject) {
+    if (getCookie("mapSetting") == "") {
+        setCookie("mapSetting", "default", 10);
+    }
+
+    const mapSetting = getCookie("mapSetting");
+
     const zoom_level_for_tiles = 10;
     const select = document.getElementById("select-input");
     const infowindowNewLocation = new google.maps.InfoWindow();
@@ -6,15 +12,20 @@ function initCreateDestinationMap() {
     infowindowNewLocation.setContent(infowindowContentNewLocation);
     const geocoder = new google.maps.Geocoder();
 
+    const userPosition = returnObject.userPosition;
+    const zoom_for_pos = returnObject.zoom_for_pos;
+
     let map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 42.697708, lng: 23.321867 },
-        zoom: 12
+        center: { lat: userPosition.lat, lng: userPosition.lng },
+        zoom: zoom_for_pos.zoom,
+        minZoom: zoom_for_pos.min_zoom,
+        styles: getCustomMapStyles(mapSetting),
     });
 
     const button = document.getElementById("create_destination");
 
     const marker = new google.maps.Marker({
-        position: { lat: 42.69821264238199, lng: 23.32152367724611},
+        position: { lat: userPosition.lat, lng: userPosition.lng},
         map: map,
         draggable: true,
         title: "Drag To New Location"
@@ -34,6 +45,8 @@ function initCreateDestinationMap() {
                 return "Bar";
             case 'night_club':
                 return "Night Club";
+            case 'lodging':
+                return "Hotel";
         }
     }
 

@@ -1,9 +1,12 @@
-function initOriginDestinationMap() {
+async function initOriginDestinationMap(returnObject) {
     if (getCookie("mapSetting") == "") {
         setCookie("mapSetting", "default", 10);
     }
+
+    const userPosition = returnObject.userPosition;
+    const zoom_for_pos = returnObject.zoom_for_pos;
+
     const mapSetting = getCookie("mapSetting");
-    console.log(mapSetting);
     const zoom_level_for_tiles = 10;
     let dmarkers = [];
     const input = document.getElementById("pac-input");
@@ -32,14 +35,16 @@ function initOriginDestinationMap() {
     };
 
     let map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 42.697708, lng: 23.321867 },
-        zoom: 12,
-        minZoom: 11,
+        center: { lat: userPosition.lat, lng: userPosition.lng },
+        zoom: zoom_for_pos.zoom,
+        minZoom: zoom_for_pos.min_zoom,
         styles: getCustomMapStyles(mapSetting),
         disableDefaultUI: true,
         streetViewControl: true,
         fullscreenControl: true
     });
+    
+    //map.controls[google.maps.ControlPosition.TOP_CENTER].push(select);
 
     const autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo("bounds", map);
@@ -376,9 +381,16 @@ function initOriginDestinationMap() {
         deleteMarkers(); 
         infowindowParking.close();
         destination_type = select.value;
+
+        if(directionsDisplay != null) {
+            directionsDisplay.setMap(null);
+            directionsDisplay = null;
+            directionsDisplay = new google.maps.DirectionsRenderer();
+        }    
+
         if(origin_location && destination_type) {
             prepareAsync(origin_location, destination_type); 
         }   
     });
-
 }
+
