@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 
 {% block head %}
+
+    {% if not user.is_authenticated %}
+    
+    <script>
+        $(function hey() {
+            window.location.replace('/');
+        })
+    </script>
+    {% endif %}
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="../static/js/getCurrentUserLocationAndZoomLevel.js"></script>
     <script src="../static/js/getTileIdFromLocation.js"></script>
@@ -13,6 +23,7 @@
 {% endblock head %}
 
 {% block content %}
+
     <script>
         function onChange(event) {
             document.getElementById("select-input").value = event.target.value;

@@ -274,7 +274,24 @@ async function initOriginDestinationMap(returnObject) {
 
     function getNearest(origin_location, nearbySearchResult, DBLocations, destination_type) {
         let nearestLocationName = null;
-        let minimalDistance = getDistanceFromLatLng(origin_location, nearbySearchResult.position);
+        let minimalDistance = null;
+        if(nearbySearchResult == google.maps.places.PlacesServiceStatus.ZERO_RESULTS && DBLocations == null) {
+            return;
+        }
+
+        else if (nearbySearchResult != google.maps.places.PlacesServiceStatus.ZERO_RESULTS && DBLocations == null) {
+            displayOnMapDestination(nearbySearchResult, destination_type);
+            return;
+        }
+
+        else if (nearbySearchResult == google.maps.places.PlacesServiceStatus.ZERO_RESULTS && DBLocations != null) {
+            minimalDistance = 100000;
+        }
+            
+        else {
+            minimalDistance = getDistanceFromLatLng(origin_location, nearbySearchResult.position);
+        }
+
         for(let key in DBLocations) {
             let currentDistance = getDistanceFromLatLng(origin_location, DBLocations[key].position)
             if (minimalDistance > currentDistance) {
@@ -311,7 +328,8 @@ async function initOriginDestinationMap(returnObject) {
         };
 
         const {x, y} = getTileIdObjectFromLocation(origin_location, zoom_level_for_tiles);
-        
+
+
         const DBLocationListRef = firebase.database().ref("Locations/" + getStringFromXY(x, y) + "/" + destination_type);
 
         const googleMapsService = new google.maps.places.PlacesService(map);
@@ -319,7 +337,9 @@ async function initOriginDestinationMap(returnObject) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 const nearbySearchResult = handleNearbySearchResult(results[0]);
                 getNearestFrom(origin_location, nearbySearchResult, DBLocationListRef, destination_type);
-                
+            }
+            else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+                getNearestFrom(origin_location, google.maps.places.PlacesServiceStatus.ZERO_RESULTS, DBLocationListRef, destination_type);
             }
         });
     }

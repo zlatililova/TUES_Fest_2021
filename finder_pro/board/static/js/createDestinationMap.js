@@ -92,7 +92,6 @@ function initCreateDestinationMap(returnObject) {
         const newLocationType = select.value;
         
         const tileIdString = getTileIdFromLocation(marker.position, zoom_level_for_tiles);
-        console.log(tileIdString);
         const locationListRef = firebase.database().ref("Locations/" + tileIdString + "/" + newLocationType);
         
         const lat = marker.position.lat();

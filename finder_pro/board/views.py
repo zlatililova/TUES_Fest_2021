@@ -12,7 +12,14 @@ def about(request):
     return render(request, 'about.html')
 
 def create(request):
-    return render(request, 'create.html')
+
+    user = request.user
+
+    context = {
+        'user': user
+    }
+
+    return render(request, 'create.html', context)
 
 def settings(request):
     return render(request, 'settings.html')
