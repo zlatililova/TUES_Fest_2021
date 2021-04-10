@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load crispy_forms_tags %}
+
 {% block head %}
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="../static/js/Cookie.js"></script>
@@ -8,8 +10,31 @@
 {% endblock head %}
 
 {% block content %}
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="account-heading text-light">{{user.username}}</h2>
+          <h5 class="text-white">Name: {{user.first_name}} {{user.last_name}} </h5>
+          <h5 class="text-white">E-mail: {{user.email}}</h5>
 
-<h3 class= "text-dark" style = "text-align:center; padding-top: 10px;">Choose Map Theme: </h3>
+        </div>
+      </div>
+      <form method="POST"  enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group text-white">
+            <legend class=  "border-bottom md-4"> Update Profile Info</legend>
+            {{ u_form|crispy }}
+          </fieldset>
+          <div class="form-group">
+            <button class="main-button" type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="big-text">
+        <h3 style = "text-align:center; padding-top: 10px">Choose Map Theme: </h3>
+      </div>
+      
 
     <div onchange="mapSetting()">
         <select class="select-button" id="select-map-setting" value="">
@@ -32,7 +57,6 @@
             selectmapSetting.value = "default";
             setCookie("mapSetting", "default", 10);
         }
-        
     </script>
 
 {% endblock content %}

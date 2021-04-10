@@ -3,6 +3,8 @@ async function initOriginDestinationMap(returnObject) {
         setCookie("mapSetting", "default", 10);
     }
 
+    console.log("Style: ", document.getElementsByClassName('big-text')[0].style.color);
+
     const userPosition = returnObject.userPosition;
     const zoom_for_pos = returnObject.zoom_for_pos;
 

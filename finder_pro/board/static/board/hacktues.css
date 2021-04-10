@@ -222,6 +222,7 @@ nav ul li.btn:hover span:before{
   border: 1px solid #1A1A1D;
   border-radius: 3px;
   margin: 60px;
+  margin-top: 10px;
 }
 
 #select-input {

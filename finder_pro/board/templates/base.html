@@ -1,9 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+    
     <head profile="http://localhost:8000/">
-
-<link rel="icon" type="image/png" href="{% static 'images/car-emoji-by-google.png' %}">
+        <link rel="icon" type="image/png" href="{% static 'images/car-emoji-by-google.png' %}">
+        
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,10 +19,13 @@
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
         
-        {% block head %}{% endblock head %}
+        {%  block head %}{% endblock head %}
     </head>
 
     <body >
+        <script src="../static//js/Cookie.js"></script>
+        <script src="../static/js/setStyle.js"></script>
+
         <nav>
             <ul>
                 <li class="logo">FINDER<span style="color: #FAFAFA;">PRO</span>
@@ -34,20 +38,17 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About</a></li>
                 {% if user.is_authenticated != 0 %}
-                    <li><a href="{% url 'create-page' %}">Create</a></li>
+                    <li><a href="{% url 'add-location-page' %}">Add Location</a></li>
+                    <li><a href="{% url 'settingss' %}">Settings</a></li>
                 {% endif %}
 
-                    
-                    
-                    <li><a href="{% url 'profile' %}">Profile</button></a>
                 </div>
                 {% if user.is_authenticated != 0 %}
-                <a class="asp" href="{% url 'logout' %}"><button class="main-button">Log out</button></a>
-                <a class="asp" href="{% url 'settings' %}"><button class="main-button">Settings</button></a>
+                    <a class="asp" href="{% url 'logout' %}"><button class="main-button">Log out</button></a>
                 {% else %}
                 
-                <a class="asp" href="{% url 'login' %}"><button class="main-button">Log in</button></a>
-                <a class="asp" href="{% url 'register' %}"><button class="main-button">Register</button></a>
+                    <a class="asp" href="{% url 'login' %}"><button class="main-button">Log in</button></a>
+                    <a class="asp" href="{% url 'register' %}"><button class="main-button">Register</button></a>
                 {% endif %}
                 </li>
             </ul>
@@ -63,6 +64,10 @@
     <div>
         {% block content %}{% endblock %}
     </div>
+
+    <script>
+        setStyle();
+    </script>
 
     <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
 

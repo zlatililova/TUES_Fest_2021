@@ -19,4 +19,5 @@ function mapSetting() {
         selectmapSetting.children['second-option'].value = selectmapSettingFirstOptionValue;
 
         setCookie("mapSetting", selectmapSetting.value, 10);
+        setStyle();
 }

@@ -1,5 +1,26 @@
 {% extends "base.html" %}
+
+{% block head %}
+
+  <script src="../../../board/static/js/Cookie.js"></script>
+  <script src="../../../board/static/js/setStyle.js"></script>
+
+{% endblock head %}
+
 {% block content %}
+
+      <script>
+        $(function() {
+          setCookie('mapSetting', '', 1);
+        })
+      </script>
+
+      <script>
+        $(function(){
+          setStyle();
+        })
+      </script>
+
       <div class = "content-section users">
         <h2 class = "text-white">You have been logged out :(</h2>
         <div class="border-top pt-3">
