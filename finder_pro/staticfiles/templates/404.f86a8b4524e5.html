@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="static/js/getCurrentUserLocationAndZoomLevel.js"></script>
+    <script src="static/js/getTileIdFromLocation.js"></script>
+    <script src="static/js/originDestinationMap.js"></script>
+    <script src="static/js/customMapStyles.js"></script>
+    <script src="static/js/Cookie.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfJv0kVR2g4urnqqZ5HoJEu4SMLtsVCPo&callback=getCurrentUserLocationAndZoomLevel&libraries=places&v=weekly" async defer></script>
+    <link rel="stylesheet" type="text/css" href="static/board/hacktues.css" />
+{% endblock head %}
+
+{% block content %}
+
+    <div class="big-text">
+        <h3 style = "text-align:center; padding-top: 10px;">Something Went Wrong (404) Consider Going Back To Home Page</h3>
+    </div>
+
+{% endblock content %}
