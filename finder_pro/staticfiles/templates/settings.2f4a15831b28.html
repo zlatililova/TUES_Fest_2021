@@ -48,6 +48,7 @@
     </div>
 
     <script>
+      if(localStorage.getItem("hasAcceptedCookies") === "True") {
         const selectwebSiteSetting = document.getElementById("select-map-setting");
         const cookie = getCookie("webSiteSetting");
         if (cookie != "") {
@@ -57,6 +58,19 @@
             selectwebSiteSetting.value = "default";
             setCookie("webSiteSetting", "default", 10);
         }
+      }
+      else if(localStorage.getItem("hasAcceptedCookies") === "False") {
+        const selectwebSiteSetting = document.getElementById("select-map-setting");
+        const uiState = localStorage.getItem("uiState");
+        if (uiState != "") {
+            selectwebSiteSetting.value = uiState;
+        }
+        else {
+            selectwebSiteSetting.value = "default";
+            localStorage.setItem("uiState", "default");
+        }
+      }
+        
     </script>
 
 {% endblock content %}

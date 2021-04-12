@@ -1,9 +1,17 @@
-function initCreateDestinationMap(returnObject) {
-    if (getCookie("webSiteSetting") == "") {
-        setCookie("webSiteSetting", "default", 10);
+function initCreateDestinationMap(userLocationObject) {
+    let webSiteSetting = null;
+    if(localStorage.getItem("hasAcceptedCookies") === "False") {
+        if(localStorage.getItem("uiState") == null) {
+            localStorage.setItem("uiState", "default"); 
+        }
+        webSiteSetting = localStorage.getItem("uiState");
     }
-
-    const webSiteSetting = getCookie("webSiteSetting");
+    else if(localStorage.getItem("hasAcceptedCookies") == "True") {
+        if (getCookie("webSiteSetting") == "") {
+            setCookie("webSiteSetting", "default", 10);
+        }
+        webSiteSetting = getCookie("webSiteSetting");
+    }
 
     const zoom_level_for_tiles = 10;
     const select = document.getElementById("select-input");
@@ -12,13 +20,13 @@ function initCreateDestinationMap(returnObject) {
     infowindowNewLocation.setContent(infowindowContentNewLocation);
     const geocoder = new google.maps.Geocoder();
 
-    const userPosition = returnObject.userPosition;
-    const zoom_for_pos = returnObject.zoom_for_pos;
+    const userPosition = userLocationObject.userPosition;
+    const zoom_for_pos = userLocationObject.zoom_for_pos;
 
     let map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: userPosition.lat, lng: userPosition.lng },
         zoom: zoom_for_pos.zoom,
-        minZoom:2,
+        minZoom: zoom_for_pos.minZoom,
         styles: getCustomMapStyles(webSiteSetting),
     });
 
@@ -52,7 +60,7 @@ function initCreateDestinationMap(returnObject) {
 
     marker.addListener('position_changed', function() {
         infowindowContentNewLocation.children["new-location-name"].textContent = getLocationNameFromType(select.value);
-        infowindowContentNewLocation.children["new-location-position"].textContent = getTileIdFromLocation(marker.position, zoom_level_for_tiles);
+        infowindowContentNewLocation.children["new-location-position"].textContent = "Lat: " + marker.position.lat() + " Lng: " + marker.position.lng();
     });
 
     marker.addListener('mouseover', function() {

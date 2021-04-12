@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'r=q-k@9zn3+mo-bn$i#-553)dn4!h%@()w8mlq*nskq9j#n3cy')
 
-DEBUG = False 
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'www.finderpro.tech'

@@ -1,9 +1,16 @@
 function setStyle() {
-    if (getCookie('webSiteSetting') == "") {
-        setCookie('webSiteSetting', 'default');
+    let uiState = localStorage.getItem("uiState");
+    if(uiState == null) {
+        uiState = 'default';
+    }
+    if(localStorage.getItem("hasAcceptedCookies") === "True") {
+        if (getCookie('webSiteSetting') == "") {
+            setCookie('webSiteSetting', 'default');
+        }
+        uiState = getCookie('webSiteSetting');
     }
 
-    switch(getCookie('webSiteSetting')) {
+    switch(uiState) {
         case 'default':
             document.body.style.backgroundColor = "white";
             const textsDark = document.getElementsByClassName('big-text');

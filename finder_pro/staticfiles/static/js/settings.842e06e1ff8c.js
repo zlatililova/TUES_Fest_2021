@@ -1,5 +1,11 @@
 function webSiteSetting() {
 
+        let hasAcceptedCookies = localStorage.getItem("hasAcceptedCookies");
+
+        if(hasAcceptedCookies == null) {
+            hasAcceptedCookies = "False";
+        }
+ 
         let selectwebSiteSetting = document.getElementById("select-map-setting");
         
         switch(selectwebSiteSetting.value) {
@@ -18,6 +24,13 @@ function webSiteSetting() {
         selectwebSiteSetting.children['second-option'].innerHTML = selectwebSiteSettingFirstOptionInnerHtml;
         selectwebSiteSetting.children['second-option'].value = selectwebSiteSettingFirstOptionValue;
 
-        setCookie("webSiteSetting", selectwebSiteSetting.value, 10);
-        setStyle();
+        if(hasAcceptedCookies === "True") {
+            setCookie("webSiteSetting", selectwebSiteSetting.value, 10);
+            setStyle();
+        }
+        else if (hasAcceptedCookies === "False"){
+            localStorage.setItem("uiState", selectwebSiteSetting.value);
+            setStyle();
+        }
+
 }

@@ -1,12 +1,22 @@
-async function initOriginDestinationMap(returnObject) {
-    if (getCookie("webSiteSetting") == "") {
-        setCookie("webSiteSetting", "default", 10);
+async function initOriginDestinationMap(userLocationObject) {
+    let webSiteSetting = null;
+    if(localStorage.getItem("hasAcceptedCookies") === "False") {
+        if(localStorage.getItem("uiState") == null) {
+            localStorage.setItem("uiState", "default"); 
+        }
+        webSiteSetting = localStorage.getItem("uiState");
+    }
+    else if(localStorage.getItem("hasAcceptedCookies") == "True") {
+        if (getCookie("webSiteSetting") == "") {
+            setCookie("webSiteSetting", "default", 10);
+        }
+        webSiteSetting = getCookie("webSiteSetting");
     }
 
-    const userPosition = returnObject.userPosition;
-    const zoom_for_pos = returnObject.zoom_for_pos;
 
-    const webSiteSetting = getCookie("webSiteSetting");
+    const userPosition = userLocationObject.userPosition;
+    const zoom_for_pos = userLocationObject.zoom_for_pos;
+
     const zoom_level_for_tiles = 10;
     let dmarkers = [];
     const input = document.getElementById("pac-input");
