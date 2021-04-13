@@ -2,9 +2,35 @@
 
 {% block head %}
 
+  <script src="../../static/js/useCookie.js"></script>
+  <script src="../../static/js/useStyle.js"></script>
+
 {% endblock head %}
 
 {% block content %}
+
+      <script type='text/javascript'>
+
+        (function()
+        {
+          if( window.localStorage )
+          {
+            if( !localStorage.getItem('firstLoad') )
+            {
+              localStorage['firstLoad'] = true;
+              window.location.reload();
+            }  
+            else
+              localStorage.removeItem('firstLoad');
+          }
+        })();
+      
+      </script>
+
+      <script>
+        logout();
+      </script>
+
       <div class = "content-section users">
         <h2 class = "text-white">You have been logged out :(</h2>
         <div class="border-top pt-3">

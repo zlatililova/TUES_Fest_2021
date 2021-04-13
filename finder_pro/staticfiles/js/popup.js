@@ -85,6 +85,7 @@ function popup() {
         }
     }
     else {
+        sessionStorage.setItem("hasAcceptedCookies", "True");
         getCurrentUserLocationAndZoomLevel();
     }
 }

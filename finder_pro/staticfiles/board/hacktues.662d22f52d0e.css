@@ -10,8 +10,7 @@
 
 nav{  
   background: #6F2232;
-  padding: 10px 40px 10px 70px;
-  border: 1px solid #000;
+  padding: 0px 10px 0px;
   border-right: none;
   border-left: none;
   z-index: 2;
@@ -77,6 +76,11 @@ nav ul div.items a:hover{
   color:#fff;
 }
 
+.items li {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .search-icon input:focus, textarea:focus, select:focus{
   color: #fff;
   outline: none;
@@ -93,9 +97,6 @@ nav ul div.items a:hover{
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: #fff;
 }
-
-::se
-
 
 .main-button {
   text-align: center;
@@ -116,8 +117,8 @@ button:hover {
 }
 
 #map {
-  height: 500px;
-  width: 75%;
+  height: 750px;
+  width: 85%;
   position: relative;
   margin: auto;
   margin-top: 10px;
@@ -151,16 +152,16 @@ button:hover {
   color: #000;
 }
 
-  nav ul li.btn span.show:before{
-    content: '\f00d';
-  }
+nav ul li.btn span.show:before{
+  content: '\f00d';
+}
 
-  nav ul li.btn{
-      font-size: 30px;
-      flex: 1;
-      padding: 0 30px;
-      display: none;
-  }
+nav ul li.btn{
+    font-size: 30px;
+    flex: 1;
+    padding: 0 30px;
+    display: none;
+}
 
 nav ul li.btn span{
     height: 42px;
@@ -178,7 +179,7 @@ nav ul li.btn:hover span:before{
 
   @media screen and (max-width: 1052px) {
     nav{
-      padding: 10px 40px 10px 0px;
+      padding: 0px 10px 0px;
     }
     nav ul li.logo{
       display: none;
@@ -193,7 +194,7 @@ nav ul li.btn:hover span:before{
     }
     nav{
       z-index: 1;
-      padding: 9px 40px 9px 0;
+      padding: 0px 10px 0px;
     }
     nav ul div.items{
       z-index: 1;

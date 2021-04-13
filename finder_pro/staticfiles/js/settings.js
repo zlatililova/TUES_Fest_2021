@@ -5,6 +5,8 @@ function webSiteSetting() {
         if(hasAcceptedCookies == null) {
             hasAcceptedCookies = "False";
         }
+
+        console.log(hasAcceptedCookies)
  
         let selectwebSiteSetting = document.getElementById("select-map-setting");
         

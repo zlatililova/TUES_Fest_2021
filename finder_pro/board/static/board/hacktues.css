@@ -10,7 +10,7 @@
 
 nav{  
   background: #6F2232;
-  padding: 0px 10px 00px;
+  padding: 0px 10px 0px;
   border-right: none;
   border-left: none;
   z-index: 2;
@@ -74,6 +74,11 @@ nav ul div.items a:hover{
   height:50px;
   margin-bottom: 30px;
   color:#fff;
+}
+
+.items li {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .search-icon input:focus, textarea:focus, select:focus{
@@ -174,7 +179,7 @@ nav ul li.btn:hover span:before{
 
   @media screen and (max-width: 1052px) {
     nav{
-      padding: 10px 40px 10px 0px;
+      padding: 0px 10px 0px;
     }
     nav ul li.logo{
       display: none;
@@ -189,7 +194,7 @@ nav ul li.btn:hover span:before{
     }
     nav{
       z-index: 1;
-      padding: 9px 40px 9px 0;
+      padding: 0px 10px 0px;
     }
     nav ul div.items{
       z-index: 1;
