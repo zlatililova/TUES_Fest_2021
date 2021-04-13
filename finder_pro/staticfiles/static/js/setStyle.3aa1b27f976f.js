@@ -1,9 +1,9 @@
 function setStyle() {
-    let uiState = localStorage.getItem("uiState");
+    let uiState = sessionStorage.getItem("uiState");
     if(uiState == null) {
         uiState = 'default';
     }
-    if(localStorage.getItem("hasAcceptedCookies") === "True") {
+    if(sessionStorage.getItem("hasAcceptedCookies") === "True") {
         if (getCookie('webSiteSetting') == "") {
             setCookie('webSiteSetting', 'default');
         }

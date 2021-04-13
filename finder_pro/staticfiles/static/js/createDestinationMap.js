@@ -1,12 +1,12 @@
 function initCreateDestinationMap(userLocationObject) {
     let webSiteSetting = null;
-    if(localStorage.getItem("hasAcceptedCookies") === "False") {
-        if(localStorage.getItem("uiState") == null) {
-            localStorage.setItem("uiState", "default"); 
+    if(sessionStorage.getItem("hasAcceptedCookies") === "False") {
+        if(sessionStorage.getItem("uiState") == null) {
+            sessionStorage.setItem("uiState", "default"); 
         }
-        webSiteSetting = localStorage.getItem("uiState");
+        webSiteSetting = sessionStorage.getItem("uiState");
     }
-    else if(localStorage.getItem("hasAcceptedCookies") == "True") {
+    else if(sessionStorage.getItem("hasAcceptedCookies") == "True") {
         if (getCookie("webSiteSetting") == "") {
             setCookie("webSiteSetting", "default", 10);
         }

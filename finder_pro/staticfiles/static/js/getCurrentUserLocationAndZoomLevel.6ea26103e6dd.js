@@ -1,5 +1,5 @@
 async function getCurrentUserLocationAndZoomLevel() {
-    if(localStorage.getItem("hasAcceptedCookies") === "True") {
+    if(sessionStorage.getItem("hasAcceptedCookies") === "True" || getCookie("webSiteSetting") != "") {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 const userLocationObject = {

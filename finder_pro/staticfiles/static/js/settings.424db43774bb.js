@@ -1,6 +1,6 @@
 function webSiteSetting() {
 
-        let hasAcceptedCookies = localStorage.getItem("hasAcceptedCookies");
+        let hasAcceptedCookies = sessionStorage.getItem("hasAcceptedCookies");
 
         if(hasAcceptedCookies == null) {
             hasAcceptedCookies = "False";
@@ -29,7 +29,7 @@ function webSiteSetting() {
             setStyle();
         }
         else if (hasAcceptedCookies === "False"){
-            localStorage.setItem("uiState", selectwebSiteSetting.value);
+            sessionStorage.setItem("uiState", selectwebSiteSetting.value);
             setStyle();
         }
 

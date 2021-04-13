@@ -1,12 +1,12 @@
 async function initOriginDestinationMap(userLocationObject) {
     let webSiteSetting = null;
-    if(localStorage.getItem("hasAcceptedCookies") === "False") {
-        if(localStorage.getItem("uiState") == null) {
-            localStorage.setItem("uiState", "default"); 
+    if(sessionStorage.getItem("hasAcceptedCookies") === "False") {
+        if(sessionStorage.getItem("uiState") == null) {
+            sessionStorage.setItem("uiState", "default"); 
         }
-        webSiteSetting = localStorage.getItem("uiState");
+        webSiteSetting = sessionStorage.getItem("uiState");
     }
-    else if(localStorage.getItem("hasAcceptedCookies") == "True") {
+    else if(sessionStorage.getItem("hasAcceptedCookies") == "True") {
         if (getCookie("webSiteSetting") == "") {
             setCookie("webSiteSetting", "default", 10);
         }
@@ -363,9 +363,14 @@ async function initOriginDestinationMap(userLocationObject) {
             let currentDistance = getDistanceFromLatLng(origin_location, neighboringTylesPositions[i]);
             if (minimalDistance > currentDistance) {
                 minimalDistance = currentDistance;
-                nearestPosition = neighboringTylesPositions[i]
+                nearestPosition = neighboringTylesPositions[i];
             }
         }
+
+        if(nearestPosition == null) {
+            nearestPosition = neighboringTylesPositions[0];
+        }
+
         const nearestTilePositionGMLatLng = new google.maps.LatLng(nearestPosition.lat, nearestPosition.lng);
         return getTileIdFromLocation(nearestTilePositionGMLatLng, zoom_level_for_tiles);
     
@@ -455,7 +460,10 @@ async function initOriginDestinationMap(userLocationObject) {
 
         const neighboringTyles = getNeighboringTyles(x, y);
         const neighboringTylesPositions = getTilesCenterPositions(neighboringTyles);
+        
         const nearestOtherTileId = getNearestTile(origin_location, neighboringTylesPositions);
+
+
 
         const LOriginTileLocationsListRef = firebase.database().ref("Locations/" + getStringFromXY(x, y) + "/" + destination_type);
         const NearestTileLocationsListRef = firebase.database().ref("Locations/" + nearestOtherTileId + "/" + destination_type);
