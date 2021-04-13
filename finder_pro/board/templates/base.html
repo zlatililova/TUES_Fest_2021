@@ -43,10 +43,6 @@
                     <li><a href="{% url 'settings' %}">Settings</a></li>
                 {% endif %}
 
-                {% if user.is_authenticated != 0 %}
-                    <a class="asp" href="{% url 'logout' %}"><button class="main-button">Log out</button></a>
-                {% endif %}
-
                 </div>
                 {% if user.is_authenticated == 0 %}
                                 
