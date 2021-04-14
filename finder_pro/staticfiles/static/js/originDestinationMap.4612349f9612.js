@@ -15,10 +15,7 @@ async function initOriginDestinationMap(userLocationObject) {
     else if(getCookie("webSiteSetting") != "") {
         webSiteSetting = getCookie("webSiteSetting");
     }
-
-    console.log(webSiteSetting);
-
-
+    
     const userPosition = userLocationObject.userPosition;
     const zoom_for_pos = userLocationObject.zoom_for_pos;
 
