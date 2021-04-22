@@ -46,6 +46,8 @@ async function initOriginDestinationMap(userLocationObject) {
         anchor: new google.maps.Point(15, 30)        
     };
 
+    setStyle();
+
     let map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: userPosition.lat, lng: userPosition.lng },
         zoom: zoom_for_pos.zoom,
