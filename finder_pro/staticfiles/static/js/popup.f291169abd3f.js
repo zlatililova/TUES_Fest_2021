@@ -1,4 +1,4 @@
-function popup() {
+async function popup() {
     if(getCookie("webSiteSetting") == "") {
         let wasAskedForCookieConsent = sessionStorage.getItem("wasAsked");
         let hasAcceptedCookies = sessionStorage.getItem("hasAcceptedCookies");
