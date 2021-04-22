@@ -58,8 +58,6 @@ async function initOriginDestinationMap(userLocationObject) {
         fullscreenControl: true
     });
     
-    //map.controls[google.maps.ControlPosition.TOP_CENTER].push(select);
-
     const autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo("bounds", map);
     autocomplete.setFields(["address_components", "geometry", "icon", "name"]);
